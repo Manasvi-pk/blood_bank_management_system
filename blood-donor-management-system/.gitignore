@@ -3,3 +3,7 @@
 
 # Local database configuration may contain credentials.
 /application-local.properties
+
+# Keep local database credentials private
+**/application-local.properties
+.env
