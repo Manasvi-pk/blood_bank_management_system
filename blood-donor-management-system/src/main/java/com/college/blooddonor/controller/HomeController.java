@@ -1,3 +1,4 @@
+
 package com.college.blooddonor.controller;
 
 import org.springframework.stereotype.Controller;
@@ -9,11 +10,6 @@ public class HomeController {
     @GetMapping({"/", "/dashboard"})
     public String home() {
         return "home";
-    }
-
-    @GetMapping("/donors")
-    public String donors() {
-        return "donors";
     }
 
     @GetMapping("/recipients")

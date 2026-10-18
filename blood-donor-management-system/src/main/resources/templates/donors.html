@@ -1,48 +1,117 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: shell('Donor management', 'donors', ~{::pageContent})}">
+
 <section th:fragment="pageContent" class="page-section">
+
     <div class="page-heading">
         <div>
             <p class="eyebrow">PEOPLE</p>
             <h1>Donor management</h1>
-            <p class="page-description">Review the sample donor registry and eligibility details.</p>
+            <p class="page-description">Register donors and view saved donor records.</p>
         </div>
-        <button class="button button-primary" type="button" data-panel-toggle="#donor-form" aria-expanded="false">
-            <span aria-hidden="true">+</span> Register donor
+
+        <button class="button button-primary" type="button"
+                data-panel-toggle="#donor-form" aria-expanded="false">
+            + Register donor
         </button>
     </div>
 
-    <section class="form-card" id="donor-form" aria-labelledby="donor-form-heading" hidden>
+    <p th:if="${successMessage}" th:text="${successMessage}"
+       role="status"></p>
+
+    <section class="form-card" id="donor-form"
+             aria-labelledby="donor-form-heading" hidden>
+
         <div class="form-heading">
-            <div><h2 id="donor-form-heading">Register a donor</h2><p>Prototype form — entries are not stored.</p></div>
+            <div>
+                <h2 id="donor-form-heading">Register a donor</h2>
+                <p>Enter the donor's details below.</p>
+            </div>
         </div>
-        <form class="record-form" data-prototype-form="donor">
-            <label class="field"><span>Full name</span><input name="name" type="text" autocomplete="name" placeholder="e.g. Asha Sharma" required></label>
-            <label class="field"><span>Blood group</span><select name="group" required><option value="">Choose a group</option><option>A+</option><option>A−</option><option>B+</option><option>B−</option><option>O+</option><option>O−</option><option>AB+</option><option>AB−</option></select></label>
-            <label class="field"><span>Email address</span><input name="email" type="email" autocomplete="email" placeholder="name@example.test" required></label>
-            <label class="field"><span>Area or city</span><input name="area" type="text" placeholder="Area or city" required></label>
-            <div class="form-actions"><p class="form-hint">Demo only. No data will be saved.</p><button class="button button-primary" type="submit" disabled>Preview registration</button></div>
-            <p class="form-feedback" data-form-feedback role="status" hidden></p>
+
+        <form class="record-form" th:action="@{/donors}"
+              th:object="${donor}" method="post">
+
+            <label class="field">
+                <span>Full name</span>
+                <input type="text" th:field="*{name}"
+                       placeholder="Enter full name" required>
+            </label>
+
+            <label class="field">
+                <span>Blood group</span>
+                <select th:field="*{bloodGroup}" required>
+                    <option value="">Choose a group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                </select>
+            </label>
+
+            <label class="field">
+                <span>Email address</span>
+                <input type="email" th:field="*{email}"
+                       placeholder="Enter email address" required>
+            </label>
+
+            <label class="field">
+                <span>Area or city</span>
+                <input type="text" th:field="*{area}"
+                       placeholder="Enter area or city" required>
+            </label>
+
+            <div class="form-actions">
+                <p class="form-hint">Donor details will be saved to the database.</p>
+                <button class="button button-primary" type="submit">
+                    Save donor
+                </button>
+            </div>
         </form>
     </section>
 
-    <section class="content-card table-card" aria-labelledby="donors-table-heading">
+    <section class="content-card table-card"
+             aria-labelledby="donors-table-heading">
+
         <div class="section-heading table-toolbar">
-            <div><h2 id="donors-table-heading">Donor registry</h2><p>Sample records for layout preview</p></div>
-            <label class="search-field"><span class="visually-hidden">Search donors</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
-                <input type="search" placeholder="Search donors..." data-table-search="donors">
-            </label>
+            <div>
+                <h2 id="donors-table-heading">Donor registry</h2>
+                <p>Donors saved in your database</p>
+            </div>
         </div>
+
         <div class="table-scroll">
             <table class="data-table">
-                <caption class="visually-hidden">Sample donor registry</caption>
-                <thead><tr><th scope="col">Donor</th><th scope="col">Blood group</th><th scope="col">Last donation</th><th scope="col">Eligible from</th><th scope="col">Status</th></tr></thead>
-                <tbody data-sample-table="donors"></tbody>
+                <thead>
+                    <tr>
+                        <th scope="col">Donor</th>
+                        <th scope="col">Blood group</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Area</th>
+                    </tr>
+                </thead>
+
+                <tbody data-sample-table="donors" data-database-table="true">
+                    <tr th:each="donor : ${donors}">
+                        <td th:text="${donor.name}"></td>
+                        <td th:text="${donor.bloodGroup}"></td>
+                        <td th:text="${donor.email}"></td>
+                        <td th:text="${donor.area}"></td>
+                    </tr>
+
+                    <tr th:if="${#lists.isEmpty(donors)}">
+                        <td colspan="4">No donors registered yet.</td>
+                    </tr>
+                </tbody>
             </table>
-            <p class="empty-state" data-empty-state="donors" hidden>No matching donors in the sample dataset.</p>
         </div>
     </section>
+
 </section>
 </html>

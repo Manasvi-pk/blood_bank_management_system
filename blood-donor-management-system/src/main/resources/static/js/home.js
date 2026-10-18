@@ -122,6 +122,7 @@
   };
 
   document.querySelectorAll("[data-sample-table]").forEach((body) => {
+    if (body.dataset.databaseTable === "true") return;
     const config = tableRows[body.dataset.sampleTable];
     if (!config) return;
     const limit = Number(body.dataset.rowLimit) || config.rows.length;
