@@ -17,15 +17,27 @@ mvn -version
 
 ## Configure MySQL
 
-Create an empty database in MySQL:
+The `blood_donor_management` database already exists. The application connects to the MySQL server on the same computer at `localhost:3306`. It does not create, delete, or recreate tables; `spring.jpa.hibernate.ddl-auto=none` is set.
 
-```sql
-CREATE DATABASE blood_donor_management;
+On your Mac, make sure the Homebrew MySQL service is running. The usual service command is:
+
+```bash
+brew services start mysql
 ```
 
-Copy `src/main/resources/application-local.properties.example` to `application-local.properties` in this project folder. Update the username and password there with your local MySQL credentials. The real `application-local.properties` file is ignored by Git, so credentials are not committed.
+If you installed a versioned formula, check `brew services list` and start that MySQL service instead. Set the credentials in the same Mac terminal session you will use to start the app:
 
-Alternatively, set `DB_URL`, `DB_USERNAME`, and `DB_PASSWORD` as environment variables before starting the application.
+```zsh
+export DB_USERNAME="your_mysql_username"
+read -s "DB_PASSWORD?MySQL password: "
+export DB_PASSWORD
+```
+
+The password is read without echoing it or putting it directly in the command history. `DB_URL` is optional; its default is `jdbc:mysql://localhost:3306/blood_donor_management`.
+
+The optional `application-local.properties` file can override local connection settings. Copy `src/main/resources/application-local.properties.example` to `application-local.properties` in this project folder if needed. The real file is ignored by Git, and its username and password entries still read from `DB_USERNAME` and `DB_PASSWORD`.
+
+Replit runs in the cloud and cannot reach MySQL on your Mac's `localhost`. Run this application on your Mac to use that database.
 
 ## Run locally
 
@@ -37,10 +49,12 @@ mvn spring-boot:run
 
 Open [http://localhost:8080](http://localhost:8080).
 
+To check the database connection, open [http://localhost:8080/db-check](http://localhost:8080/db-check). It returns only `{"status":"connected"}` or a generic unavailable response; it does not include credentials or connection details.
+
 To create a packaged JAR:
 
 ```bash
 mvn clean package
 ```
 
-The app uses `spring.jpa.hibernate.ddl-auto=none`; it will not create or modify database tables. The sign-in screen is a visual prototype only, so Spring Security is not included and authentication is not active.
+The sign-in screen is a visual prototype only, so Spring Security is not included and authentication is not active.
