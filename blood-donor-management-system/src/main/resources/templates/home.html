@@ -1,52 +1,116 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="The starting page for a college Blood Donor Management System project.">
-    <title>Blood Donor Management System</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <script th:src="@{/js/home.js}" defer></script>
-</head>
-<body>
-<main class="page-shell">
-    <header class="topbar">
-        <a class="brand" th:href="@{/}" aria-label="Blood Donor Management System home">
-            <span class="brand-mark" aria-hidden="true">+</span>
-            <span>Blood Donor Management System</span>
-        </a>
-        <span class="project-label">College OOPS Project</span>
-    </header>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: shell('Dashboard', 'dashboard', ~{::pageContent})}">
+<section th:fragment="pageContent" class="page-section">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">OVERVIEW</p>
+            <h1>Blood bank overview</h1>
+            <p class="page-description">A clear snapshot of donor activity, available stock, and requests.</p>
+        </div>
+        <div class="heading-actions">
+            <span class="sample-tag"><span aria-hidden="true"></span> Demo figures</span>
+            <a class="button button-primary" th:href="@{/requests}">
+                <span aria-hidden="true">+</span> New request
+            </a>
+        </div>
+    </div>
 
-    <section class="welcome-panel" aria-labelledby="page-title">
-        <div class="eyebrow">
-            <span class="status-dot" aria-hidden="true"></span>
-            Project foundation
-        </div>
-        <h1 id="page-title">A thoughtful start<br>to a life-saving system.</h1>
-        <p class="intro">
-            The Java and Spring Boot foundation is in place. Donor and blood bank
-            features can be added in the next development steps.
-        </p>
-        <button class="details-button" id="details-button" type="button"
-                aria-expanded="false" aria-controls="project-details">
-            About this project
-            <span class="button-arrow" aria-hidden="true">↗</span>
-        </button>
-        <div class="details-panel" id="project-details" hidden>
-            This page is rendered with Thymeleaf. The application uses Spring Boot,
-            Spring Data JPA, and the MySQL JDBC driver.
-        </div>
-        <div class="decorative-orbit orbit-one" aria-hidden="true"></div>
-        <div class="decorative-orbit orbit-two" aria-hidden="true"></div>
-        <div class="blood-symbol" aria-hidden="true">+</div>
+    <section class="metric-grid" aria-label="Sample dashboard statistics">
+        <article class="metric-card">
+            <div class="metric-card-top">
+                <span class="metric-icon icon-rose" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </span>
+                <span class="metric-trend">+8.2%</span>
+            </div>
+            <p class="metric-label">Registered donors</p>
+            <strong class="metric-value">1,284</strong>
+            <span class="metric-caption">Sample total in the demo</span>
+        </article>
+        <article class="metric-card">
+            <div class="metric-card-top">
+                <span class="metric-icon icon-pink" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M12 21s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.9A4.5 4.5 0 0 1 20 10c0 6.5-8 11-8 11Z"/><path d="M12 8v6m-3-3h6"/></svg>
+                </span>
+                <span class="metric-trend trend-neutral">This month</span>
+            </div>
+            <p class="metric-label">Donation units</p>
+            <strong class="metric-value">318</strong>
+            <span class="metric-caption">Whole blood donations</span>
+        </article>
+        <article class="metric-card">
+            <div class="metric-card-top">
+                <span class="metric-icon icon-lilac" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M20 7h-9m0 0 3-3m-3 3 3 3"/><path d="M4 17h9m0 0-3-3m3 3-3 3"/></svg>
+                </span>
+                <span class="metric-trend trend-neutral">Open cases</span>
+            </div>
+            <p class="metric-label">Recipient cases</p>
+            <strong class="metric-value">42</strong>
+            <span class="metric-caption">Sample active requests</span>
+        </article>
+        <article class="metric-card">
+            <div class="metric-card-top">
+                <span class="metric-icon icon-amber" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                </span>
+                <span class="metric-trend trend-attention">Needs review</span>
+            </div>
+            <p class="metric-label">Pending requests</p>
+            <strong class="metric-value">12</strong>
+            <span class="metric-caption">Sample requests awaiting action</span>
+        </article>
     </section>
 
-    <footer class="page-footer">
-        <span>Built with Java 21 and Spring Boot</span>
-        <span class="footer-separator" aria-hidden="true">/</span>
-        <span>Foundation stage</span>
-    </footer>
-</main>
-</body>
+    <div class="dashboard-grid">
+        <section class="content-card stock-card" aria-labelledby="stock-heading">
+            <div class="section-heading">
+                <div>
+                    <h2 id="stock-heading">Blood group stock</h2>
+                    <p>Illustrative inventory levels by blood group</p>
+                </div>
+                <a class="text-link" th:href="@{/inventory}">View inventory <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="stock-grid" data-stock-grid aria-label="Sample blood inventory"></div>
+        </section>
+
+        <section class="content-card request-card" aria-labelledby="requests-heading">
+            <div class="section-heading">
+                <div>
+                    <h2 id="requests-heading">Requests to review</h2>
+                    <p>Sample requests needing attention</p>
+                </div>
+                <a class="icon-link" th:href="@{/requests}" aria-label="View all blood requests">→</a>
+            </div>
+            <ul class="request-list" data-pending-requests></ul>
+            <a class="button button-secondary full-width" th:href="@{/requests}">Open request management</a>
+        </section>
+    </div>
+
+    <section class="content-card table-card" aria-labelledby="recent-donations-heading">
+        <div class="section-heading">
+            <div>
+                <h2 id="recent-donations-heading">Recent donations</h2>
+                <p>Example activity from the sample dataset</p>
+            </div>
+            <a class="text-link" th:href="@{/donations}">All donation records <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="table-scroll">
+            <table class="data-table">
+                <caption class="visually-hidden">Sample recent donation records</caption>
+                <thead>
+                <tr>
+                    <th scope="col">Donor</th>
+                    <th scope="col">Blood group</th>
+                    <th scope="col">Donation date</th>
+                    <th scope="col">Collection center</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody data-sample-table="donations" data-row-limit="5"></tbody>
+            </table>
+        </div>
+    </section>
+</section>
 </html>

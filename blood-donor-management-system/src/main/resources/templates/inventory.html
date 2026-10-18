@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: shell('Blood inventory', 'inventory', ~{::pageContent})}">
+<section th:fragment="pageContent" class="page-section">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">STOCK MONITORING</p>
+            <h1>Blood inventory</h1>
+            <p class="page-description">Review example stock levels by blood group and storage location.</p>
+        </div>
+        <button class="button button-primary" type="button" data-panel-toggle="#inventory-form" aria-expanded="false">
+            <span aria-hidden="true">+</span> Update stock
+        </button>
+    </div>
+
+    <section class="form-card" id="inventory-form" aria-labelledby="inventory-form-heading" hidden>
+        <div class="form-heading"><div><h2 id="inventory-form-heading">Update inventory</h2><p>Prototype form — stock levels are not changed.</p></div></div>
+        <form class="record-form" data-prototype-form="inventory">
+            <label class="field"><span>Blood group</span><select name="group" required><option value="">Choose a group</option><option>A+</option><option>A−</option><option>B+</option><option>B−</option><option>O+</option><option>O−</option><option>AB+</option><option>AB−</option></select></label>
+            <label class="field"><span>Units available</span><input name="units" type="number" min="0" max="1000" placeholder="0" required></label>
+            <label class="field"><span>Storage location</span><input name="location" type="text" placeholder="Storage location" required></label>
+            <div class="form-actions"><p class="form-hint">Demo only. No data will be saved.</p><button class="button button-primary" type="submit" disabled>Preview update</button></div>
+            <p class="form-feedback" data-form-feedback role="status" hidden></p>
+        </form>
+    </section>
+
+    <section class="content-card stock-overview-card" aria-labelledby="inventory-overview-heading">
+        <div class="section-heading">
+            <div><h2 id="inventory-overview-heading">Available units by group</h2><p>All amounts below are illustrative sample data</p></div>
+            <span class="stock-legend"><span class="legend-dot legend-available"></span>Available <span class="legend-dot legend-low"></span>Low stock</span>
+        </div>
+        <div class="inventory-stock-grid" data-stock-grid aria-label="Sample blood inventory levels"></div>
+    </section>
+
+    <section class="content-card table-card" aria-labelledby="inventory-table-heading">
+        <div class="section-heading table-toolbar">
+            <div><h2 id="inventory-table-heading">Storage summary</h2><p>Sample unit counts by group</p></div>
+            <label class="search-field"><span class="visually-hidden">Search inventory</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+                <input type="search" placeholder="Search inventory..." data-table-search="inventory">
+            </label>
+        </div>
+        <div class="table-scroll">
+            <table class="data-table">
+                <caption class="visually-hidden">Sample inventory storage summary</caption>
+                <thead><tr><th scope="col">Blood group</th><th scope="col">Units available</th><th scope="col">Storage location</th><th scope="col">Last reviewed</th><th scope="col">Stock status</th></tr></thead>
+                <tbody data-sample-table="inventory"></tbody>
+            </table>
+            <p class="empty-state" data-empty-state="inventory" hidden>No matching inventory in the sample dataset.</p>
+        </div>
+    </section>
+</section>
+</html>

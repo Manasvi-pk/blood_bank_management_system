@@ -1,6 +1,6 @@
 # Blood Donor Management System
 
-A Java 21 and Spring Boot foundation for a college OOPS project. This step includes the Maven setup, a Thymeleaf home page, and MySQL connection configuration. Donor features, entities, and database tables are intentionally not included yet.
+A Java 21 and Spring Boot college OOPS project with a Thymeleaf blood bank interface. The current stage contains a dashboard and prototype screens for donor management, recipients, donation records, blood inventory, requests, and sign-in. The displayed records are sample data only; forms do not save data, and no database entities or tables are included yet.
 
 ## Requirements
 
@@ -43,4 +43,4 @@ To create a packaged JAR:
 mvn clean package
 ```
 
-The app uses `spring.jpa.hibernate.ddl-auto=none`; it will not create or modify database tables. Spring Security is not included because this foundation has no login or protected pages.
+The app uses `spring.jpa.hibernate.ddl-auto=none`; it will not create or modify database tables. The sign-in screen is a visual prototype only, so Spring Security is not included and authentication is not active.

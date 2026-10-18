@@ -1,0 +1,47 @@
+Continue my existing Blood Donor Management System project. Read the existing files before making changes. Do not recreate the project, change the technology stack, or delete working files.
+
+My project uses Java 21, Spring Boot, Maven, Thymeleaf, HTML, CSS, JavaScript, and MySQL.
+
+TASK: Upgrade the existing frontend into a polished, professional blood bank management website.
+
+DESIGN:
+- Modern, attractive red, white, and soft pink color palette
+- Professional medical dashboard style
+- Responsive layout for desktop and mobile
+- Consistent typography, spacing, icons, cards, tables, and buttons
+- Accessible forms, clear labels, and readable contrast
+- Smooth but subtle hover effects
+
+PAGES AND NAVIGATION:
+1. Dashboard
+2. Donor Management
+3. Recipient Management
+4. Donation Records
+5. Blood Inventory
+6. Blood Requests
+7. Login
+
+IMPLEMENTATION:
+- Preserve the existing Spring Boot application entry point and HomeController.
+- Preserve the existing Thymeleaf home.html template and improve it rather than replacing the project.
+- Reuse the existing CSS and JavaScript files where possible.
+- If additional pages are needed, create Thymeleaf templates in the existing templates folder.
+- Add a reusable sidebar and top navigation.
+- Make navigation links work.
+- Add attractive dashboard statistic cards, blood group stock cards, recent donation records, and pending request sections.
+- Add well-designed forms and searchable tables for future backend integration.
+- Use realistic sample data only for the visual prototype. Clearly keep sample data separate from real database data.
+- Do not claim that forms save data to MySQL until backend functionality is implemented.
+- Do not add React, Node.js, paid APIs, external paid services, or unnecessary dependencies.
+- Do not change database configuration or implement new database features in this task.
+- Do not remove existing configuration files.
+- Keep the implementation simple and suitable for a college OOPS project.
+
+CREDIT-SAVING REQUIREMENTS:
+- Inspect the existing project before editing.
+- Make the smallest necessary set of changes.
+- Do not regenerate files that already work.
+- Do not repeatedly rewrite the same code.
+- At the end, list the files changed and any remaining limitations.
+
+Complete only this frontend stage.

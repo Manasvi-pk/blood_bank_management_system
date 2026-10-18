@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="shell(pageTitle, activePage, content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fffaf9">
+    <meta name="description" content="Blood bank management interface prototype for a college project.">
+    <title th:text="${pageTitle} + ' · HemoCare'">HemoCare</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/sample-data.js}" defer></script>
+    <script th:src="@{/js/home.js}" defer></script>
+</head>
+<body>
+<div class="app-shell">
+    <aside th:replace="~{fragments/sidebar :: sidebar(${activePage})}"></aside>
+    <button class="sidebar-overlay" type="button" data-sidebar-overlay
+            aria-label="Close navigation menu" hidden></button>
+
+    <div class="main-column">
+        <header th:replace="~{fragments/topbar :: topbar(${pageTitle})}"></header>
+        <main class="main-content">
+            <div class="prototype-banner" role="note">
+                <span class="prototype-banner-icon" aria-hidden="true">i</span>
+                <p><strong>Prototype mode</strong> — all displayed records are sample data. Forms do not save or connect to MySQL.</p>
+            </div>
+            <noscript>
+                <p class="noscript-note">Enable JavaScript to view the sample tables and inventory cards.</p>
+            </noscript>
+            <div th:replace="${content}"></div>
+            <footer class="app-footer">
+                <span>HemoCare · Blood Donor Management System</span>
+                <span>College project prototype</span>
+            </footer>
+        </main>
+    </div>
+</div>
+</body>
+</html>

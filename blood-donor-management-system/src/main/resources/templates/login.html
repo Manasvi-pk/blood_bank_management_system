@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fffaf9">
+    <title>Sign in · HemoCare</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/home.js}" defer></script>
+</head>
+<body class="login-body">
+<main class="login-page">
+    <section class="login-brand-panel" aria-label="HemoCare">
+        <a class="sidebar-brand login-brand" th:href="@{/dashboard}">
+            <span class="brand-symbol" aria-hidden="true">
+                <svg viewBox="0 0 32 32"><path d="M16 4c-2.7 4.3-8 9.5-8 15a8 8 0 0 0 16 0c0-5.5-5.3-10.7-8-15Z"/><path d="M16 13v10m-5-5h10"/></svg>
+            </span>
+            <span class="brand-wordmark"><strong>HemoCare</strong><small>Blood bank system</small></span>
+        </a>
+        <div class="login-brand-copy">
+            <span class="login-kicker">A COLLEGE PROJECT PROTOTYPE</span>
+            <h1>Every donation<br>can make a difference.</h1>
+            <p>One thoughtful place to explore donor activity, blood availability, and requests.</p>
+        </div>
+        <div class="login-brand-art" aria-hidden="true">
+            <span class="art-ring ring-large"></span>
+            <span class="art-ring ring-small"></span>
+            <span class="art-drop"><svg viewBox="0 0 72 92"><path d="M36 4C24 23 11 39 11 57a25 25 0 0 0 50 0C61 39 48 23 36 4Z"/><path d="M36 39v31M20.5 54.5h31"/></svg></span>
+        </div>
+        <p class="login-panel-footer">Sample interface only · No real donor data</p>
+    </section>
+
+    <section class="login-form-panel">
+        <a class="back-link" th:href="@{/dashboard}"><span aria-hidden="true">←</span> Back to dashboard</a>
+        <div class="login-form-wrap">
+            <span class="prototype-label">SIGN-IN SCREEN PREVIEW</span>
+            <h2>Welcome back</h2>
+            <p class="login-subtitle">Sign in to continue to the workspace.</p>
+            <div class="login-notice" role="note">
+                <strong>Prototype only.</strong> Authentication is not configured in this project stage.
+            </div>
+            <form class="login-form" data-prototype-form="login" autocomplete="off">
+                <label class="field"><span>Email address</span><input type="email" autocomplete="off" placeholder="you@example.test" required></label>
+                <label class="field"><span>Password</span><input type="password" autocomplete="new-password" placeholder="Enter a demo password" required></label>
+                <button class="button button-primary login-submit" type="submit" disabled>Sign in <span aria-hidden="true">→</span></button>
+                <p class="form-feedback" data-form-feedback role="status" hidden></p>
+            </form>
+            <p class="login-privacy">This preview does not send or store credentials.</p>
+        </div>
+        <footer class="login-footer">HemoCare · Blood Donor Management System</footer>
+    </section>
+</main>
+</body>
+</html>

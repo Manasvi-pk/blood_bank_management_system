@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: shell('Recipient management', 'recipients', ~{::pageContent})}">
+<section th:fragment="pageContent" class="page-section">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">PATIENT SUPPORT</p>
+            <h1>Recipient management</h1>
+            <p class="page-description">Track sample recipient cases and their current priority.</p>
+        </div>
+        <button class="button button-primary" type="button" data-panel-toggle="#recipient-form" aria-expanded="false">
+            <span aria-hidden="true">+</span> Add recipient
+        </button>
+    </div>
+
+    <section class="form-card" id="recipient-form" aria-labelledby="recipient-form-heading" hidden>
+        <div class="form-heading"><div><h2 id="recipient-form-heading">Add a recipient case</h2><p>Prototype form — no records are saved.</p></div></div>
+        <form class="record-form" data-prototype-form="recipient">
+            <label class="field"><span>Recipient name</span><input name="name" type="text" autocomplete="name" placeholder="Full name" required></label>
+            <label class="field"><span>Hospital or facility</span><input name="facility" type="text" placeholder="Facility name" required></label>
+            <label class="field"><span>Blood group</span><select name="group" required><option value="">Choose a group</option><option>A+</option><option>A−</option><option>B+</option><option>B−</option><option>O+</option><option>O−</option><option>AB+</option><option>AB−</option></select></label>
+            <label class="field"><span>Units needed</span><input name="units" type="number" min="1" max="20" placeholder="1" required></label>
+            <div class="form-actions"><p class="form-hint">Demo only. No data will be saved.</p><button class="button button-primary" type="submit" disabled>Preview recipient</button></div>
+            <p class="form-feedback" data-form-feedback role="status" hidden></p>
+        </form>
+    </section>
+
+    <section class="content-card table-card" aria-labelledby="recipients-table-heading">
+        <div class="section-heading table-toolbar">
+            <div><h2 id="recipients-table-heading">Recipient cases</h2><p>Sample cases awaiting or receiving support</p></div>
+            <label class="search-field"><span class="visually-hidden">Search recipients</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+                <input type="search" placeholder="Search recipients..." data-table-search="recipients">
+            </label>
+        </div>
+        <div class="table-scroll">
+            <table class="data-table">
+                <caption class="visually-hidden">Sample recipient cases</caption>
+                <thead><tr><th scope="col">Recipient</th><th scope="col">Facility</th><th scope="col">Blood group</th><th scope="col">Units needed</th><th scope="col">Priority</th><th scope="col">Status</th></tr></thead>
+                <tbody data-sample-table="recipients"></tbody>
+            </table>
+            <p class="empty-state" data-empty-state="recipients" hidden>No matching recipients in the sample dataset.</p>
+        </div>
+    </section>
+</section>
+</html>

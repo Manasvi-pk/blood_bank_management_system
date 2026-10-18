@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: shell('Donation records', 'donations', ~{::pageContent})}">
+<section th:fragment="pageContent" class="page-section">
+    <div class="page-heading">
+        <div>
+            <p class="eyebrow">COLLECTION ACTIVITY</p>
+            <h1>Donation records</h1>
+            <p class="page-description">Browse the sample collection history and centers.</p>
+        </div>
+        <button class="button button-primary" type="button" data-panel-toggle="#donation-form" aria-expanded="false">
+            <span aria-hidden="true">+</span> Record donation
+        </button>
+    </div>
+
+    <section class="form-card" id="donation-form" aria-labelledby="donation-form-heading" hidden>
+        <div class="form-heading"><div><h2 id="donation-form-heading">Record a donation</h2><p>Prototype form — this does not update inventory.</p></div></div>
+        <form class="record-form" data-prototype-form="donation">
+            <label class="field"><span>Donor name</span><input name="donor" type="text" placeholder="Select or enter a donor" required></label>
+            <label class="field"><span>Blood group</span><select name="group" required><option value="">Choose a group</option><option>A+</option><option>A−</option><option>B+</option><option>B−</option><option>O+</option><option>O−</option><option>AB+</option><option>AB−</option></select></label>
+            <label class="field"><span>Donation date</span><input name="date" type="date" required></label>
+            <label class="field"><span>Units collected</span><input name="units" type="number" min="1" max="3" value="1" required></label>
+            <label class="field field-wide"><span>Collection center</span><input name="center" type="text" placeholder="Center name" required></label>
+            <div class="form-actions"><p class="form-hint">Demo only. No data will be saved.</p><button class="button button-primary" type="submit" disabled>Preview donation</button></div>
+            <p class="form-feedback" data-form-feedback role="status" hidden></p>
+        </form>
+    </section>
+
+    <section class="content-card table-card" aria-labelledby="donations-table-heading">
+        <div class="section-heading table-toolbar">
+            <div><h2 id="donations-table-heading">Donation history</h2><p>Sample collection records</p></div>
+            <label class="search-field"><span class="visually-hidden">Search donation records</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+                <input type="search" placeholder="Search records..." data-table-search="donations">
+            </label>
+        </div>
+        <div class="table-scroll">
+            <table class="data-table">
+                <caption class="visually-hidden">Sample donation history</caption>
+                <thead><tr><th scope="col">Donor</th><th scope="col">Blood group</th><th scope="col">Date</th><th scope="col">Collection center</th><th scope="col">Units</th><th scope="col">Status</th></tr></thead>
+                <tbody data-sample-table="donations"></tbody>
+            </table>
+            <p class="empty-state" data-empty-state="donations" hidden>No matching donation records in the sample dataset.</p>
+        </div>
+    </section>
+</section>
+</html>
