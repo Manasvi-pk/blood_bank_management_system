@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The starting page for a college Blood Donor Management System project.">
+    <title>Blood Donor Management System</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script th:src="@{/js/home.js}" defer></script>
+</head>
+<body>
+<main class="page-shell">
+    <header class="topbar">
+        <a class="brand" th:href="@{/}" aria-label="Blood Donor Management System home">
+            <span class="brand-mark" aria-hidden="true">+</span>
+            <span>Blood Donor Management System</span>
+        </a>
+        <span class="project-label">College OOPS Project</span>
+    </header>
+
+    <section class="welcome-panel" aria-labelledby="page-title">
+        <div class="eyebrow">
+            <span class="status-dot" aria-hidden="true"></span>
+            Project foundation
+        </div>
+        <h1 id="page-title">A thoughtful start<br>to a life-saving system.</h1>
+        <p class="intro">
+            The Java and Spring Boot foundation is in place. Donor and blood bank
+            features can be added in the next development steps.
+        </p>
+        <button class="details-button" id="details-button" type="button"
+                aria-expanded="false" aria-controls="project-details">
+            About this project
+            <span class="button-arrow" aria-hidden="true">↗</span>
+        </button>
+        <div class="details-panel" id="project-details" hidden>
+            This page is rendered with Thymeleaf. The application uses Spring Boot,
+            Spring Data JPA, and the MySQL JDBC driver.
+        </div>
+        <div class="decorative-orbit orbit-one" aria-hidden="true"></div>
+        <div class="decorative-orbit orbit-two" aria-hidden="true"></div>
+        <div class="blood-symbol" aria-hidden="true">+</div>
+    </section>
+
+    <footer class="page-footer">
+        <span>Built with Java 21 and Spring Boot</span>
+        <span class="footer-separator" aria-hidden="true">/</span>
+        <span>Foundation stage</span>
+    </footer>
+</main>
+</body>
+</html>
