@@ -1,47 +1,143 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: shell('Donation records', 'donations', ~{::pageContent})}">
+
 <section th:fragment="pageContent" class="page-section">
+
     <div class="page-heading">
         <div>
-            <p class="eyebrow">COLLECTION ACTIVITY</p>
+            <p class="eyebrow">DONOR MANAGEMENT</p>
             <h1>Donation records</h1>
-            <p class="page-description">Browse the sample collection history and centers.</p>
+            <p class="page-description">
+                Record blood donations and review saved donation history.
+            </p>
         </div>
-        <button class="button button-primary" type="button" data-panel-toggle="#donation-form" aria-expanded="false">
-            <span aria-hidden="true">+</span> Record donation
+
+        <button class="button button-primary" type="button"
+                data-panel-toggle="#donation-form" aria-expanded="false">
+            + Register donation
         </button>
     </div>
 
-    <section class="form-card" id="donation-form" aria-labelledby="donation-form-heading" hidden>
-        <div class="form-heading"><div><h2 id="donation-form-heading">Record a donation</h2><p>Prototype form — this does not update inventory.</p></div></div>
-        <form class="record-form" data-prototype-form="donation">
-            <label class="field"><span>Donor name</span><input name="donor" type="text" placeholder="Select or enter a donor" required></label>
-            <label class="field"><span>Blood group</span><select name="group" required><option value="">Choose a group</option><option>A+</option><option>A−</option><option>B+</option><option>B−</option><option>O+</option><option>O−</option><option>AB+</option><option>AB−</option></select></label>
-            <label class="field"><span>Donation date</span><input name="date" type="date" required></label>
-            <label class="field"><span>Units collected</span><input name="units" type="number" min="1" max="3" value="1" required></label>
-            <label class="field field-wide"><span>Collection center</span><input name="center" type="text" placeholder="Center name" required></label>
-            <div class="form-actions"><p class="form-hint">Demo only. No data will be saved.</p><button class="button button-primary" type="submit" disabled>Preview donation</button></div>
-            <p class="form-feedback" data-form-feedback role="status" hidden></p>
+    <p th:if="${successMessage}" th:text="${successMessage}"
+       role="status"></p>
+
+    <section class="form-card" id="donation-form"
+             aria-labelledby="donation-form-heading" hidden>
+        <div class="form-heading">
+            <div>
+                <h2 id="donation-form-heading">Register a donation</h2>
+                <p>Enter the donation details below.</p>
+            </div>
+        </div>
+
+        <form class="record-form" th:action="@{/donations}"
+              th:object="${donation}" method="post">
+
+            <label class="field">
+                <span>Donor name</span>
+                <input type="text" th:field="*{donorName}"
+                       placeholder="Full name" required>
+            </label>
+
+            <label class="field">
+                <span>Blood group</span>
+                <select th:field="*{bloodGroup}" required>
+                    <option value="">Select blood group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                </select>
+            </label>
+
+            <label class="field">
+                <span>Units donated</span>
+                <input type="number" th:field="*{unitsDonated}"
+                       min="1" max="100" required>
+            </label>
+
+            <label class="field">
+                <span>Donation date</span>
+                <input type="date" th:field="*{donationDate}" required>
+            </label>
+
+            <div class="form-actions">
+                <p class="form-hint">Records are saved to MySQL.</p>
+                <button class="button button-primary" type="submit">
+                    Save donation
+                </button>
+            </div>
         </form>
     </section>
 
-    <section class="content-card table-card" aria-labelledby="donations-table-heading">
+    <section class="content-card table-card">
         <div class="section-heading table-toolbar">
-            <div><h2 id="donations-table-heading">Donation history</h2><p>Sample collection records</p></div>
-            <label class="search-field"><span class="visually-hidden">Search donation records</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
-                <input type="search" placeholder="Search records..." data-table-search="donations">
+            <div>
+                <h2>Saved donation records</h2>
+                <p>Donation history retrieved from MySQL</p>
+            </div>
+
+            <label class="search-field">
+                <span class="visually-hidden">Search donations</span>
+                <input type="search" id="donation-search"
+                       placeholder="Search donations...">
             </label>
         </div>
+
         <div class="table-scroll">
             <table class="data-table">
-                <caption class="visually-hidden">Sample donation history</caption>
-                <thead><tr><th scope="col">Donor</th><th scope="col">Blood group</th><th scope="col">Date</th><th scope="col">Collection center</th><th scope="col">Units</th><th scope="col">Status</th></tr></thead>
-                <tbody data-sample-table="donations"></tbody>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Donor</th>
+                    <th>Blood group</th>
+                    <th>Units</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tbody id="donation-table-body">
+                <tr th:each="item : ${donations}">
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.donorName}"></td>
+                    <td th:text="${item.bloodGroup}"></td>
+                    <td th:text="${item.unitsDonated}"></td>
+                    <td th:text="${item.donationDate}"></td>
+                    <td th:text="${item.status}"></td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(donations)}">
+                    <td colspan="6">No donation records found.</td>
+                </tr>
+                </tbody>
             </table>
-            <p class="empty-state" data-empty-state="donations" hidden>No matching donation records in the sample dataset.</p>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const search = document.getElementById('donation-search');
+            const body = document.getElementById('donation-table-body');
+
+            search.addEventListener('input', function () {
+                const query = search.value.toLowerCase();
+
+                body.querySelectorAll('tr').forEach(function (row) {
+                    if (row.cells.length > 1) {
+                        row.hidden =
+                            !row.textContent.toLowerCase().includes(query);
+                    }
+                });
+            });
+        });
+    </script>
+
 </section>
 </html>

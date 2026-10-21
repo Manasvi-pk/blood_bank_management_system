@@ -1,47 +1,157 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{fragments/layout :: shell('Blood requests', 'requests', ~{::pageContent})}">
+
 <section th:fragment="pageContent" class="page-section">
+
     <div class="page-heading">
         <div>
             <p class="eyebrow">FULFILLMENT</p>
             <h1>Blood requests</h1>
-            <p class="page-description">Review sample hospital requests and their urgency.</p>
+            <p class="page-description">
+                Manage hospital blood requests stored in MySQL.
+            </p>
         </div>
-        <button class="button button-primary" type="button" data-panel-toggle="#request-form" aria-expanded="false">
-            <span aria-hidden="true">+</span> Create request
+        <button class="button button-primary" type="button"
+                data-panel-toggle="#request-form" aria-expanded="false">
+            + Create request
         </button>
     </div>
 
-    <section class="form-card" id="request-form" aria-labelledby="request-form-heading" hidden>
-        <div class="form-heading"><div><h2 id="request-form-heading">Create a blood request</h2><p>Prototype form — the request will not be submitted.</p></div></div>
-        <form class="record-form" data-prototype-form="request">
-            <label class="field"><span>Hospital or facility</span><input name="facility" type="text" placeholder="Facility name" required></label>
-            <label class="field"><span>Contact person</span><input name="contact" type="text" placeholder="Full name" required></label>
-            <label class="field"><span>Blood group</span><select name="group" required><option value="">Choose a group</option><option>A+</option><option>A−</option><option>B+</option><option>B−</option><option>O+</option><option>O−</option><option>AB+</option><option>AB−</option></select></label>
-            <label class="field"><span>Units requested</span><input name="units" type="number" min="1" max="100" placeholder="1" required></label>
-            <label class="field"><span>Priority</span><select name="priority" required><option value="">Choose priority</option><option>Normal</option><option>High</option><option>Urgent</option></select></label>
-            <div class="form-actions"><p class="form-hint">Demo only. No data will be saved.</p><button class="button button-primary" type="submit" disabled>Preview request</button></div>
-            <p class="form-feedback" data-form-feedback role="status" hidden></p>
+    <p th:if="${successMessage}" th:text="${successMessage}"
+       role="status"></p>
+
+    <section class="form-card" id="request-form"
+             aria-labelledby="request-form-heading" hidden>
+        <div class="form-heading">
+            <div>
+                <h2 id="request-form-heading">Create a blood request</h2>
+                <p>Enter the hospital and blood requirements.</p>
+            </div>
+        </div>
+
+        <form class="record-form" th:action="@{/requests}"
+              th:object="${requestItem}" method="post">
+
+            <label class="field">
+                <span>Hospital or facility</span>
+                <input type="text" th:field="*{hospital}"
+                       placeholder="Hospital name" required>
+            </label>
+
+            <label class="field">
+                <span>Contact person</span>
+                <input type="text" th:field="*{contactPerson}"
+                       placeholder="Contact person's name" required>
+            </label>
+
+            <label class="field">
+                <span>Recipient name</span>
+                <input type="text" th:field="*{recipientName}"
+                       placeholder="Patient name" required>
+            </label>
+
+            <label class="field">
+                <span>Blood group</span>
+                <select th:field="*{bloodGroup}" required>
+                    <option value="">Choose a group</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                </select>
+            </label>
+
+            <label class="field">
+                <span>Units requested</span>
+                <input type="number" th:field="*{unitsRequested}"
+                       min="1" max="100" required>
+            </label>
+
+            <label class="field">
+                <span>Priority</span>
+                <select th:field="*{priority}" required>
+                    <option value="Normal">Normal</option>
+                    <option value="High">High</option>
+                    <option value="Urgent">Urgent</option>
+                </select>
+            </label>
+
+            <div class="form-actions">
+                <p class="form-hint">Request will be saved to MySQL.</p>
+                <button class="button button-primary" type="submit">
+                    Save request
+                </button>
+            </div>
         </form>
     </section>
 
-    <section class="content-card table-card" aria-labelledby="requests-table-heading">
+    <section class="content-card table-card">
         <div class="section-heading table-toolbar">
-            <div><h2 id="requests-table-heading">Request queue</h2><p>Sample requests for interface preview</p></div>
-            <label class="search-field"><span class="visually-hidden">Search requests</span>
-                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
-                <input type="search" placeholder="Search requests..." data-table-search="requests">
+            <div>
+                <h2>Request queue</h2>
+                <p>Requests retrieved from the database</p>
+            </div>
+            <label class="search-field">
+                <span class="visually-hidden">Search requests</span>
+                <input type="search" id="request-search"
+                       placeholder="Search requests...">
             </label>
         </div>
+
         <div class="table-scroll">
             <table class="data-table">
-                <caption class="visually-hidden">Sample blood request queue</caption>
-                <thead><tr><th scope="col">Facility</th><th scope="col">Blood group</th><th scope="col">Units</th><th scope="col">Submitted</th><th scope="col">Priority</th><th scope="col">Status</th></tr></thead>
-                <tbody data-sample-table="requests"></tbody>
+                <thead>
+                <tr>
+                    <th>Hospital</th>
+                    <th>Recipient</th>
+                    <th>Blood group</th>
+                    <th>Units</th>
+                    <th>Submitted</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tbody id="request-table-body">
+                <tr th:each="request : ${requests}">
+                    <td th:text="${request.hospital}"></td>
+                    <td th:text="${request.recipientName}"></td>
+                    <td th:text="${request.bloodGroup}"></td>
+                    <td th:text="${request.unitsRequested}"></td>
+                    <td th:text="${request.requestDate != null ? #temporals.format(request.requestDate, 'dd MMM yyyy') : '-'}"></td>
+                    <td th:text="${request.priority}"></td>
+                    <td th:text="${request.status}"></td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(requests)}">
+                    <td colspan="7">No blood requests have been added yet.</td>
+                </tr>
+                </tbody>
             </table>
-            <p class="empty-state" data-empty-state="requests" hidden>No matching requests in the sample dataset.</p>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const search = document.getElementById('request-search');
+            const body = document.getElementById('request-table-body');
+
+            search.addEventListener('input', function () {
+                const query = search.value.toLowerCase();
+
+                body.querySelectorAll('tr').forEach(function (row) {
+                    if (row.cells.length > 1) {
+                        row.hidden = !row.textContent.toLowerCase().includes(query);
+                    }
+                });
+            });
+        });
+    </script>
+
 </section>
 </html>
