@@ -4,7 +4,7 @@
 <aside class="sidebar" id="sidebar" th:fragment="sidebar(activePage)">
     <a class="sidebar-brand" th:href="@{/dashboard}" aria-label="HemoCare dashboard">
         <span class="brand-symbol" aria-hidden="true">
-            <svg viewBox="0 0 32 32"><path d="M16 4c-2.7 4.3-8 9.5-8 15a8 8 0 0 0 16 0c0-5.5-5.3-10.7-8-15Z"/><path d="M16 13v10m-5-5h10"/></svg>
+            <img th:src="@{/images/logo.png}" src="/images/logo.png" alt="" width="38" height="38">
         </span>
         <span class="brand-wordmark">
             <strong>HemoCare</strong>
@@ -25,7 +25,7 @@
            th:attr="aria-current=${activePage == 'donors' ? 'page' : null}">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20"/><circle cx="9.5" cy="7.5" r="4"/><path d="M17 11.5a4 4 0 0 0 0-8m4 16.5v-1.5a4 4 0 0 0-3-3.87"/></svg>
             <span>Donors</span>
-            <span class="nav-count">1,284</span>
+            <span class="nav-count" th:text="${#numbers.formatInteger(donorCount, 1, 'COMMA')}">0</span>
         </a>
         <a class="nav-link" th:href="@{/recipients}"
            th:classappend="${activePage == 'recipients'} ? ' is-active' : ''"

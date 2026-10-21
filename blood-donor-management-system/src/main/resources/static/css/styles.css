@@ -121,20 +121,13 @@ textarea:focus-visible {
     flex: 0 0 38px;
     display: grid;
     place-items: center;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 12px;
-    background: linear-gradient(145deg, #d44d62, #a4263e);
-    box-shadow: 0 5px 14px rgba(162, 34, 57, 0.3);
 }
 
-.brand-symbol svg {
-    width: 26px;
-    height: 26px;
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.55;
+.brand-symbol img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
 }
 
 .brand-wordmark {
