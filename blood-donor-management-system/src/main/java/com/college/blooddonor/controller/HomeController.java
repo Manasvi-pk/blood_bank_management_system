@@ -52,6 +52,12 @@ public class HomeController {
                         ? 0 : i.getUnitsAvailable())
                 .sum();
 
+        int inventoryMaximum = inventory.stream()
+                .map(BloodInventory::getUnitsAvailable)
+                .filter(units -> units != null)
+                .max(Integer::compareTo)
+                .orElse(0);
+
         long pendingRequests = requests.stream()
                 .filter(r -> "Pending".equalsIgnoreCase(r.getStatus()))
                 .count();
@@ -72,6 +78,7 @@ public class HomeController {
         model.addAttribute("donationCount", donations.size());
         model.addAttribute("totalDonationUnits", totalDonationUnits);
         model.addAttribute("availableUnits", availableUnits);
+        model.addAttribute("inventoryMaximum", inventoryMaximum);
         model.addAttribute("requestCount", requests.size());
         model.addAttribute("pendingRequestCount", pendingRequests);
         model.addAttribute("inventoryRecords", inventory);

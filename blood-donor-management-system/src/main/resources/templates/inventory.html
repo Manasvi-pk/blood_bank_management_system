@@ -122,14 +122,14 @@
                 </thead>
                 <tbody>
                 <tr th:each="item : ${inventoryRecords}">
-                    <td th:text="${item.bloodGroup}">A+</td>
+                    <td><span class="blood-group-badge" th:text="${item.bloodGroup}">A+</span></td>
                     <td th:text="${item.unitsAvailable}">0</td>
                     <td th:text="${item.lastUpdated != null ? #temporals.format(item.lastUpdated, 'dd MMM yyyy, HH:mm') : 'Not available'}">
                         Not available
                     </td>
-                    <td th:text="${item.unitsAvailable <= 5 ? 'Low stock' : 'Available'}">
+                    <td><span class="status-pill" th:classappend="${item.unitsAvailable <= 5 ? ' status-warning' : ' status-positive'}" th:text="${item.unitsAvailable <= 5 ? 'Low stock' : 'Available'}">
                         Available
-                    </td>
+                    </span></td>
                 </tr>
                 </tbody>
             </table>

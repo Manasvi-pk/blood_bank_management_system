@@ -2,6 +2,7 @@ package com.college.blooddonor.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "blood_requests")
@@ -11,19 +12,19 @@ public class BloodRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "recipient_name", nullable = false)
+    @Column(name = "recipient_name", length = 100)
     private String recipientName;
 
-    @Column(name = "contact_person")
+    @Column(name = "contact_person", length = 100)
     private String contactPerson;
 
-    @Column(name = "blood_group", nullable = false)
+    @Column(name = "blood_group", length = 3)
     private String bloodGroup;
 
-    @Column(name = "units_requested", nullable = false)
+    @Column(name = "units_requested")
     private Integer unitsRequested;
 
-    @Column(name = "hospital", nullable = false)
+    @Column(name = "hospital", length = 150)
     private String hospital;
 
     @Column(name = "request_date")
@@ -34,6 +35,9 @@ public class BloodRequest {
 
     @Column(name = "status")
     private String status = "Pending";
+
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     public BloodRequest() {}
 
@@ -78,4 +82,6 @@ public class BloodRequest {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }

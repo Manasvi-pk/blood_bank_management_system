@@ -78,19 +78,22 @@
                 </a>
             </div>
 
-            <div class="stock-grid">
-                <div class="stock-item"
+            <div class="stock-chart" th:if="${not #lists.isEmpty(inventoryRecords)}">
+                <div class="stock-bar-row"
                      th:each="item : ${inventoryRecords}">
-                    <span class="stock-group"
-                          th:text="${item.bloodGroup}">O+</span>
-                    <strong th:text="${item.unitsAvailable} + ' units'">
-                        0 units
-                    </strong>
+                    <span class="stock-group" th:text="${item.bloodGroup}">O+</span>
+                    <div class="stock-bar-track" aria-hidden="true">
+                        <span class="stock-bar-fill"
+                              th:style="'width:' + ${(item.unitsAvailable != null and inventoryMaximum > 0) ? (item.unitsAvailable * 100 / inventoryMaximum) : 0} + '%'"></span>
+                    </div>
+                    <strong th:text="${(item.unitsAvailable != null ? item.unitsAvailable : 0)} + ' units'">0 units</strong>
                 </div>
+            </div>
 
-                <p th:if="${#lists.isEmpty(inventoryRecords)}">
-                    No inventory records have been added yet.
-                </p>
+            <div class="chart-empty-state" th:if="${#lists.isEmpty(inventoryRecords)}">
+                <span class="empty-drop" aria-hidden="true">+</span>
+                <div><strong>No inventory data yet</strong><p>Add your first blood group stock record to see its availability chart.</p></div>
+                <a class="button button-secondary" th:href="@{/inventory}">Update stock</a>
             </div>
         </section>
 

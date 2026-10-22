@@ -3,6 +3,7 @@ package com.college.blooddonor.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "donations")
@@ -15,20 +16,23 @@ public class Donation {
     @Column(name = "donor_id")
     private Long donorId;
 
-    @Column(name = "donor_name", nullable = false, length = 100)
+    @Column(name = "donor_name", length = 100)
     private String donorName;
 
-    @Column(name = "blood_group", nullable = false, length = 3)
+    @Column(name = "blood_group", length = 3)
     private String bloodGroup;
 
-    @Column(name = "units_donated", nullable = false)
+    @Column(name = "units_donated")
     private Integer unitsDonated;
 
-    @Column(name = "donation_date", nullable = false)
+    @Column(name = "donation_date")
     private LocalDate donationDate;
 
-    @Column(nullable = false, length = 30)
+    @Column(length = 30)
     private String status = "Completed";
+
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     public Donation() {}
 
@@ -45,4 +49,5 @@ public class Donation {
     public void setDonationDate(LocalDate donationDate) { this.donationDate = donationDate; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }

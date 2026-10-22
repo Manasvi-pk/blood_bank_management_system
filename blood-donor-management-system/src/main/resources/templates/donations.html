@@ -107,10 +107,10 @@
                 <tr th:each="item : ${donations}">
                     <td th:text="${item.id}"></td>
                     <td th:text="${item.donorName}"></td>
-                    <td th:text="${item.bloodGroup}"></td>
+                    <td><span class="blood-group-badge" th:text="${item.bloodGroup}"></span></td>
                     <td th:text="${item.unitsDonated}"></td>
                     <td th:text="${item.donationDate}"></td>
-                    <td th:text="${item.status}"></td>
+                    <td><span class="status-pill status-positive" th:text="${item.status}"></span></td>
                 </tr>
 
                 <tr th:if="${#lists.isEmpty(donations)}">

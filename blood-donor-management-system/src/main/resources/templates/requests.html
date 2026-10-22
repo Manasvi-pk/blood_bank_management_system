@@ -122,11 +122,11 @@
                 <tr th:each="request : ${requests}">
                     <td th:text="${request.hospital}"></td>
                     <td th:text="${request.recipientName}"></td>
-                    <td th:text="${request.bloodGroup}"></td>
+                    <td><span class="blood-group-badge" th:text="${request.bloodGroup}"></span></td>
                     <td th:text="${request.unitsRequested}"></td>
                     <td th:text="${request.requestDate != null ? #temporals.format(request.requestDate, 'dd MMM yyyy') : '-'}"></td>
-                    <td th:text="${request.priority}"></td>
-                    <td th:text="${request.status}"></td>
+                    <td><span class="status-pill" th:classappend="${request.priority == 'Urgent' ? ' status-danger' : (request.priority == 'High' ? ' status-warning' : ' status-neutral')}" th:text="${request.priority}"></span></td>
+                    <td><span class="status-pill status-neutral" th:text="${request.status}"></span></td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(requests)}">
                     <td colspan="7">No blood requests have been added yet.</td>

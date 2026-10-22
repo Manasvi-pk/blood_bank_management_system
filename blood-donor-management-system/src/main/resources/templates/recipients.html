@@ -125,10 +125,10 @@
                     <td th:text="${item.id}"></td>
                     <td th:text="${item.recipientName}"></td>
                     <td th:text="${item.hospital}"></td>
-                    <td th:text="${item.bloodGroup}"></td>
+                    <td><span class="blood-group-badge" th:text="${item.bloodGroup}"></span></td>
                     <td th:text="${item.unitsRequested}"></td>
-                    <td th:text="${item.priority}"></td>
-                    <td th:text="${item.status}"></td>
+                    <td><span class="status-pill" th:classappend="${item.priority == 'Urgent' ? ' status-danger' : (item.priority == 'High' ? ' status-warning' : ' status-neutral')}" th:text="${item.priority}"></span></td>
+                    <td><span class="status-pill status-neutral" th:text="${item.status}"></span></td>
                 </tr>
 
                 <tr th:if="${#lists.isEmpty(requests)}">

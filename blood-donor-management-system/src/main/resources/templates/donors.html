@@ -84,6 +84,10 @@
                 <h2 id="donors-table-heading">Donor registry</h2>
                 <p>Donors saved in your database</p>
             </div>
+            <label class="search-field">
+                <span class="visually-hidden">Search donors</span>
+                <input type="search" id="donor-search" placeholder="Search donors...">
+            </label>
         </div>
 
         <div class="table-scroll">
@@ -97,10 +101,10 @@
                     </tr>
                 </thead>
 
-                <tbody data-sample-table="donors" data-database-table="true">
+                <tbody id="donor-table-body" data-sample-table="donors" data-database-table="true">
                     <tr th:each="donor : ${donors}">
                         <td th:text="${donor.name}"></td>
-                        <td th:text="${donor.bloodGroup}"></td>
+                        <td><span class="blood-group-badge" th:text="${donor.bloodGroup}"></span></td>
                         <td th:text="${donor.email}"></td>
                         <td th:text="${donor.area}"></td>
                     </tr>
@@ -112,6 +116,23 @@
             </table>
         </div>
     </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const search = document.getElementById('donor-search');
+            const body = document.getElementById('donor-table-body');
+            if (!search || !body) return;
+
+            search.addEventListener('input', function () {
+                const query = search.value.toLowerCase();
+                body.querySelectorAll('tr').forEach(function (row) {
+                    if (row.cells.length > 1) {
+                        row.hidden = !row.textContent.toLowerCase().includes(query);
+                    }
+                });
+            });
+        });
+    </script>
 
 </section>
 </html>
