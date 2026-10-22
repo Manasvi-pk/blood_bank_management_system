@@ -80,13 +80,13 @@
 
             <div class="stock-chart" th:if="${not #lists.isEmpty(inventoryRecords)}">
                 <div class="stock-bar-row"
-                     th:each="item : ${inventoryRecords}">
-                    <span class="stock-group" th:text="${item.bloodGroup}">O+</span>
+                     th:each="item : ${inventoryChartGroups}">
+                    <span class="stock-group" th:text="${item.label}">O+</span>
                     <div class="stock-bar-track" aria-hidden="true">
                         <span class="stock-bar-fill"
-                              th:style="'width:' + ${(item.unitsAvailable != null and inventoryMaximum > 0) ? (item.unitsAvailable * 100 / inventoryMaximum) : 0} + '%'"></span>
+                              th:style="|width:${item.percentage}%|"></span>
                     </div>
-                    <strong th:text="${(item.unitsAvailable != null ? item.unitsAvailable : 0)} + ' units'">0 units</strong>
+                    <strong th:text="${item.value} + ' units'">0 units</strong>
                 </div>
             </div>
 
@@ -130,6 +130,55 @@
         </section>
 
     </div>
+
+    <section class="dashboard-analytics-grid" aria-label="Blood bank analytics">
+        <article class="content-card analytics-card" aria-labelledby="dashboard-donation-chart-heading">
+            <div class="section-heading">
+                <div>
+                    <h2 id="dashboard-donation-chart-heading">Donations by blood group</h2>
+                    <p>Units from all saved donation records</p>
+                </div>
+                <a class="text-link" th:href="@{/donations}">View records →</a>
+            </div>
+            <div class="vertical-chart dashboard-vertical-chart" th:if="${not #lists.isEmpty(recentDonations)}">
+                <div class="vertical-chart-item" th:each="item : ${donationGroupChart}">
+                    <strong th:text="${item.value}">0</strong>
+                    <span class="vertical-chart-track"><i th:style="|height:${item.percentage}%|" aria-hidden="true"></i></span>
+                    <span th:text="${item.label}">A+</span>
+                </div>
+            </div>
+            <div class="chart-empty-state compact-empty" th:if="${#lists.isEmpty(recentDonations)}">
+                <span class="empty-drop" aria-hidden="true">+</span>
+                <div><strong>No donation data yet</strong><p>Record a donation to start building this chart.</p></div>
+            </div>
+        </article>
+
+        <article class="content-card analytics-card distribution-card" aria-labelledby="distribution-heading">
+            <div class="section-heading">
+                <div>
+                    <h2 id="distribution-heading">Inventory distribution</h2>
+                    <p>Available units by blood group</p>
+                </div>
+                <a class="text-link" th:href="@{/inventory}">Inventory →</a>
+            </div>
+            <div class="donut-layout" th:if="${availableUnits > 0}">
+                <div class="donut-chart" th:style="|background:${inventoryDistributionCss}|">
+                    <div><strong th:text="${availableUnits}">0</strong><span>units</span></div>
+                </div>
+                <ul class="donut-legend">
+                    <li th:each="item, stat : ${inventoryChartGroups}" th:if="${item.value > 0}">
+                        <i th:class="|legend-color-${stat.index}|"></i>
+                        <span th:text="${item.label}">A+</span>
+                        <strong th:text="${item.value}">0</strong>
+                    </li>
+                </ul>
+            </div>
+            <div class="chart-empty-state compact-empty" th:if="${availableUnits == 0}">
+                <span class="empty-drop" aria-hidden="true">+</span>
+                <div><strong>No inventory data yet</strong><p>Update a blood group stock level to view its split.</p></div>
+            </div>
+        </article>
+    </section>
 
     <section class="content-card table-card"
              aria-labelledby="recent-donations-heading">

@@ -76,6 +76,23 @@
         </form>
     </section>
 
+    <section class="content-card analytics-card" aria-labelledby="donation-chart-heading">
+        <div class="section-heading">
+            <div>
+                <h2 id="donation-chart-heading">Donation units by blood group</h2>
+                <p>Calculated from saved donation records</p>
+            </div>
+            <span class="chart-key"><i></i> Units donated</span>
+        </div>
+        <div class="vertical-chart" role="img" aria-label="Donation units by blood group">
+            <div class="vertical-chart-item" th:each="item : ${donationGroupChart}">
+                <strong th:text="${item.value}">0</strong>
+                <span class="vertical-chart-track"><i th:style="|height:${item.percentage}%|" aria-hidden="true"></i></span>
+                <span th:text="${item.label}">A+</span>
+            </div>
+        </div>
+    </section>
+
     <section class="content-card table-card">
         <div class="section-heading table-toolbar">
             <div>

@@ -91,6 +91,21 @@
         </form>
     </section>
 
+    <section class="content-card analytics-card request-priority-chart" aria-labelledby="priority-chart-heading">
+        <div class="section-heading">
+            <div>
+                <h2 id="priority-chart-heading">Request priority overview</h2>
+                <p>Live count of saved blood requests by priority</p>
+            </div>
+        </div>
+        <div class="priority-bars">
+            <div class="priority-bar" th:each="item : ${requestPriorityChart}">
+                <div><strong th:text="${item.label}">Urgent</strong><span th:text="${item.value} + ' requests'">0 requests</span></div>
+                <span class="priority-bar-track"><i th:style="|width:${item.percentage}%|" aria-hidden="true"></i></span>
+            </div>
+        </div>
+    </section>
+
     <section class="content-card table-card">
         <div class="section-heading table-toolbar">
             <div>
