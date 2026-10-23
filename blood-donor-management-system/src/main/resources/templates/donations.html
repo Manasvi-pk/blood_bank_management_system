@@ -20,7 +20,9 @@
         </button>
     </div>
 
-    <p th:if="${successMessage}" th:text="${successMessage}"
+    <p class="form-feedback" th:if="${errorMessage}" th:text="${errorMessage}"
+       role="alert"></p>
+    <p class="form-feedback" th:if="${successMessage}" th:text="${successMessage}"
        role="status"></p>
 
     <section class="form-card" id="donation-form"

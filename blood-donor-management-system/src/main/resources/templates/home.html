@@ -104,24 +104,34 @@
                     <h2 id="requests-heading">Requests to review</h2>
                     <p>Pending requests from the database</p>
                 </div>
-                <a class="icon-link" th:href="@{/requests}"
-                   aria-label="View all blood requests">→</a>
+                <a class="text-link" th:href="@{/requests}">
+                    View all <span aria-hidden="true">→</span>
+                </a>
             </div>
 
             <ul class="request-list">
-                <li th:each="request : ${requestsToReview}">
-                    <strong th:text="${request.hospital}">Hospital</strong>
-                    <span th:text="${request.bloodGroup}">O+</span>
-                    <span th:text="${request.unitsRequested} + ' units'">
-                        1 unit
+                <li class="request-item" th:each="request : ${requestsToReview}"
+                    th:with="stockUnits=${inventoryUnitsByGroup[request.bloodGroup] ?: 0}, requestedUnits=${request.unitsRequested ?: 0}">
+                    <span class="request-group" th:text="${request.bloodGroup}">O+</span>
+                    <span class="request-details">
+                        <strong th:text="${request.hospital != null and !#strings.isEmpty(request.hospital) ? request.hospital : request.recipientName}">Hospital</strong>
+                        <small>
+                            <span th:text="${requestedUnits}">1</span>
+                            <span th:text="${(requestedUnits == 1 ? 'unit' : 'units') + ' requested · ' + request.priority}">units requested · Normal</span>
+                        </small>
                     </span>
-                    <span th:text="${request.priority}">Normal</span>
+                    <span class="request-availability"
+                          th:classappend="${stockUnits >= requestedUnits ? ' stock-ready' : (stockUnits > 0 ? ' stock-short' : ' stock-empty')}">
+                        <strong th:text="${stockUnits >= requestedUnits ? 'Can fulfill' : (stockUnits > 0 ? 'Insufficient' : 'Out of stock')}">Can fulfill</strong>
+                        <small><span th:text="${stockUnits}">0</span> available</small>
+                    </span>
                 </li>
             </ul>
 
-            <p th:if="${#lists.isEmpty(requestsToReview)}">
-                No pending requests.
-            </p>
+            <div class="request-empty-state" th:if="${#lists.isEmpty(requestsToReview)}">
+                <span class="request-empty-icon" aria-hidden="true">✓</span>
+                <span><strong>All caught up</strong><small>No pending requests to review.</small></span>
+            </div>
 
             <a class="button button-secondary full-width"
                th:href="@{/requests}">

@@ -207,21 +207,6 @@
     });
   });
 
-  document.querySelectorAll("[data-prototype-form]").forEach((form) => {
-    const submitButton = form.querySelector('button[type="submit"]');
-    if (submitButton) submitButton.disabled = false;
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const feedback = form.querySelector("[data-form-feedback]");
-      if (feedback) {
-        feedback.textContent = form.dataset.prototypeForm === "login"
-          ? "Prototype only: authentication is not active. Nothing was sent or saved."
-          : "Prototype only: this form is not connected to storage. Nothing was saved.";
-        feedback.hidden = false;
-      }
-    });
-  });
-
   const menuButton = document.querySelector("[data-menu-button]");
   const sidebar = document.querySelector("#sidebar");
   const overlay = document.querySelector("[data-sidebar-overlay]");

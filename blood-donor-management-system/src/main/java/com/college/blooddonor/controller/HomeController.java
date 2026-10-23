@@ -120,6 +120,7 @@ public class HomeController {
         model.addAttribute("availableUnits", availableUnits);
         model.addAttribute("inventoryMaximum", inventoryMaximum);
         model.addAttribute("inventoryChartGroups", inventoryChartGroups);
+        model.addAttribute("inventoryUnitsByGroup", inventoryByGroup);
         model.addAttribute("donationGroupChart", donationGroupChart);
         model.addAttribute("inventoryDistributionCss",
                 buildDonutGradient(inventoryChartGroups, availableUnits));
@@ -160,8 +161,4 @@ public class HomeController {
         return gradient.append(')').toString();
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
 }
